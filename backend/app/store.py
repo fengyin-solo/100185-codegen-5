@@ -27,9 +27,14 @@ class Store:
                 return row
         return None
 
+    # 档案/字典类主数据表只给业务模块做引用，不单独进运营概览，避免台账读数被重复计数。
+    MASTER_TABLES = {"cp_rectifier", "cp_electrode"}
+
     def overview(self) -> dict[str, object]:
         modules: list[dict[str, object]] = []
         for name in self.module_names():
+            if name in self.MASTER_TABLES:
+                continue
             rows = self.rows(name)
             modules.append({
                 "name": name,

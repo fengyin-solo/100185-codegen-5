@@ -28,6 +28,14 @@ class EntryPayload(BaseModel):
     remark: str | None = None
 
 
+class CathodicImportPayload(BaseModel):
+    """保护电位按批次导入：rows 为逐行读数（键为导入模板列名），batch_no 为空时自动生成。"""
+
+    batch_no: str | None = None
+    rows: list[dict[str, Any]] = Field(default_factory=list)
+    remark: str | None = None
+
+
 
 class PipeEntry(BaseModel):
     """管段明细结构。"""
